@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+div#test{ border:#000 1px solid; padding:10px 40px 40px 40px; }
+.style1 {
+color: #00FF99;
+font-weight: bold;
+}
+.style2 {color: #00FF33}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script>
+var pos = 0,i, test, test_status, question, choice, choices, chA, chB, chC, correct = 0;
+var questions = [
+  [ "The command javac?", "Converts a java program into binary code", "Converts a java program into bytecode", "Converts a java program into machine language", "None of the above", "B" ],
+[ "Which is the root class of all AWT events?", "java.awt.ActionEvent", "java.awt.AWTEvent", "java.awt.event.AWTEvent", "java.awt.event.Event", "B" ],
+[ "All Java classes are derived from?", "java.lang.Class", "java.util.Name", "java.lang.Object", "java.awt.Window", "C" ],
+[ "System.in.read() is being used, the program must specify the ……………… clause?", "throws.java.out.IOException", "throws.java.in.IOException", "throws.java.io.IOException", "throws.java.io.InException", "C" ],
+[ "The out object is an object encapsulated inside the …………… class and represents the standard output device?", "standard", "local", "global", "system", "D" ],
+[ "Preparedstatement Object in JDBC is used to execute ……………………… queries?", "executable", "simple", "high level", "parameterized", "D" ],
+    [ "In JDBC …………………… imports all Java classes concerned with database connectivity?", "javax.sql.*", "java.mysql.*", "java.sql.*", "com.*", "C" ],
+    [ "Ingres is a ……………………?", "Socket", "Compiler", "Database", "Web server", "C" ],
+    [ "JSP embeds in …………… in …………………?", "Servlet, HTML", "HTML, Java", "HTML, Servlet", "Java, HTML", "D" ],
+    [ "The class at the top of exception class hierarchy is ……………………?", "ArithmeticException", "Throwable", "Class", "Exception", "B" ],
+];
+
+function _(x){
+return document.getElementById(x);
+}
+function renderQuestion(){
+test = _("test");
+if(pos >= questions.length){
+test.innerHTML = "<h2>You got "+correct+" of "+questions.length+" questions correct</h2>";
+_("test_status").innerHTML = "Test Completed";
+pos = 0;
+correct = 0;
+return false;
+}
+_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+question = questions[pos][0];
+chA = questions[pos][1];
+chB = questions[pos][2];
+chC = questions[pos][3];
+chD = questions[pos][4];
+test.innerHTML = "<h3>"+question+"</h3>";
+test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br>";
+test.innerHTML += "<input type='radio' name='choices' value='D'> "+chD+"<br><br>";
+test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+}
+function checkAnswer(){
+choices = document.getElementsByName("choices");
+for(i=0; i<choices.length; i++){
+if(choices[i].checked){
+choice = choices[i].value;
+}
+}
+if(choice == questions[pos][5]){
+correct++;
+}
+pos++;
+renderQuestion();
+}
+window.addEventListener("load", renderQuestion, false);
+function onButton(i){
+	pos=i-1;
+	test = _("test");
+	_("test_status").innerHTML = "Question "+(pos+1)+" of "+questions.length;
+	question = questions[pos][0];
+	chA = questions[pos][1];
+	chB = questions[pos][2];
+	chC = questions[pos][3];
+	chD = questions[pos][4];
+	test.innerHTML = "<h3>"+question+"</h3>";
+	test.innerHTML += "<input type='radio' name='choices' value='A'> "+chA+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='B'> "+chB+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='C'> "+chC+"<br>";
+	test.innerHTML += "<input type='radio' name='choices' value='D'> "+chD+"<br><br>";
+	test.innerHTML += "<button onclick='checkAnswer()'>Submit Answer</button>";
+	}
+</script>
+
+</head>
+<body>
+<h2 align="center" class="style1 style2"> On line Examination  for  CSL Employee Recruitment </h2>
+<h2> <marquee> Multiple Choice Questions  for  CSL Employee Recruitment </marquee> </h2>  
+<h2 id="test_status"></h2>
+<div id="test"></div>
+<script>
+for(i=0;i<questions.length;i++){
+	test = _("test");
+if(i%4==0){
+document.write("<br>");
+}
+document.write("<input type=button id=b"+i+" value="+(i+1)+" onclick=onButton(this.value)>");
+}
+</script>
+
+</body>
+</html>
